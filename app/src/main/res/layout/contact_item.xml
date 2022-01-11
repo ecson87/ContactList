@@ -39,7 +39,7 @@
         android:src="@drawable/ic_profile" />
 
       <TextView
-        android:id="@+id/idTVContactFirstName"
+        android:id="@+id/idTVContactDOB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -51,10 +51,10 @@
         android:textStyle="bold" />
 
       <TextView
-        android:id="@+id/idTVContactLastName"
+        android:id="@+id/idTVContactGender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/idTVContactFirstName"
+        android:layout_below="@id/idTVContactDOB"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_toEndOf="@id/idIVContactImage"

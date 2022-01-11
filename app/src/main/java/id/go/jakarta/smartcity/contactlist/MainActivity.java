@@ -5,29 +5,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import id.go.jakarta.smartcity.contactlist.adapter.ContactAdapter;
 import id.go.jakarta.smartcity.contactlist.model.Contact;
+import id.go.jakarta.smartcity.contactlist.model.DataResult;
 import id.go.jakarta.smartcity.contactlist.model.Name;
 import id.go.jakarta.smartcity.contactlist.model.Picture;
-import id.go.jakarta.smartcity.contactlist.service.APIData;
+import id.go.jakarta.smartcity.contactlist.service.APIHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,34 +48,16 @@ public class MainActivity extends AppCompatActivity {
 
   private void fetchContacts() {
     contactModelArrayList.clear();
-    requestQueue = APIData.getInstance(this).getRequestQueue();
+    requestQueue = APIHelper.getInstance(this).getRequestQueue();
     String url = "https://randomuser.me/api?results=5&exc=login,registered,i";
     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
       response -> {
-        try {
-          JSONArray jsonArrContact = response.getJSONArray("results");
-          for (int i = 0 ; i < jsonArrContact.length() ; i ++) {
-            try {
-              JSONObject jsonObject = jsonArrContact.getJSONObject(i);
-              JSONObject jsonObjectName = jsonObject.getJSONObject("name");
-              JSONObject jsonObjectPicture = jsonObject.getJSONObject("picture");
-              String firstName = jsonObjectName.getString("first");
-              String lastName = jsonObjectName.getString("last");
-              String large = jsonObjectPicture.getString("large");
-              String thumbnail = jsonObjectPicture.getString("thumbnail");
-              Contact contact = new Contact(new Name(firstName, lastName), new Picture(large, thumbnail));
-              contactModelArrayList.add(contact);
-            } catch (JSONException e) {
-              e.printStackTrace();
-            }
-            ContactAdapter contactAdapter = new ContactAdapter(this, contactModelArrayList);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-            contactRV.setLayoutManager(linearLayoutManager);
-            contactRV.setAdapter(contactAdapter);
-          }
-        } catch (JSONException e) {
-          e.printStackTrace();
-        }
+        DataResult dataResult = new Gson().fromJson(response.toString(), DataResult.class);
+        contactModelArrayList.addAll(dataResult.results);
+        ContactAdapter contactAdapter = new ContactAdapter(this, contactModelArrayList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        contactRV.setLayoutManager(linearLayoutManager);
+        contactRV.setAdapter(contactAdapter);
       }, error -> Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show());
     requestQueue.add(jsonObjectRequest);
   }

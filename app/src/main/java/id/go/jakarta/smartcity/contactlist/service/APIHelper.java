@@ -5,19 +5,19 @@ import android.content.Context;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class APIData {
+public class APIHelper {
   private RequestQueue requestQueue;
-  private static APIData apiData;
+  private static APIHelper apiHelper;
 
-  private APIData(Context context){
+  private APIHelper(Context context){
     requestQueue = Volley.newRequestQueue(context.getApplicationContext());
   }
 
-  public static synchronized APIData getInstance(Context context){
-    if (apiData == null){
-      apiData = new APIData(context);
+  public static synchronized APIHelper getInstance(Context context){
+    if (apiHelper == null){
+      apiHelper = new APIHelper(context);
     }
-    return apiData;
+    return apiHelper;
   }
 
   public RequestQueue getRequestQueue(){

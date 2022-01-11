@@ -1,36 +1,12 @@
 package id.go.jakarta.smartcity.contactlist.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Picture {
+  @SerializedName("large")
   public String large;
+  @SerializedName("medium")
   public String medium;
+  @SerializedName("thumbnail")
   public String thumbnail;
-
-  public Picture(String large, String thumbnail) {
-    this.large = large;
-    this.thumbnail = thumbnail;
-  }
-
-  public String getLarge() {
-    return large;
-  }
-
-  public void setLarge(String large) {
-    this.large = large;
-  }
-
-  public String getMedium() {
-    return medium;
-  }
-
-  public void setMedium(String medium) {
-    this.medium = medium;
-  }
-
-  public String getThumbnail() {
-    return thumbnail;
-  }
-
-  public void setThumbnail(String thumbnail) {
-    this.thumbnail = thumbnail;
-  }
 }

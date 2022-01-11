@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,8 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+
+import id.go.jakarta.smartcity.contactlist.model.Contact;
 
 public class ContactDetailActivity extends AppCompatActivity {
+
+  private Contact contact;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +36,33 @@ public class ContactDetailActivity extends AppCompatActivity {
     ImageButton copyName = findViewById(R.id.contact_name_copy);
     ImageView contactPictureIV = findViewById(R.id.contact_picture);
     TextView contactNameTV = findViewById(R.id.contact_name);
-    Bundle bundle = getIntent().getExtras();
-    String contactPicture = bundle.getString("contact_picture");
-    String contactName = bundle.getString("contact_name");
-    Glide.with(this).load(contactPicture).into(contactPictureIV);
+    TextView dob = findViewById(R.id.idTVContactDOB);
+    TextView gender = findViewById(R.id.idTVContactGender);
+    TextView surel = findViewById(R.id.idTVContactSurel);
+    TextView telpon = findViewById(R.id.idTVContactTelpon);
+    TextView seluler = findViewById(R.id.idTVContactSeluler);
+    TextView alamat = findViewById(R.id.idTVContactAlamat);
+    TextView lokasi = findViewById(R.id.idTVContactLokasi);
+    String jsonContact = getIntent().getExtras().getString("contact");
+    contact = new Gson().fromJson(jsonContact, Contact.class);
+    String contactName = contact.name.first + " " + contact.name.last;
+    Glide.with(this).load(contact.picture.large).into(contactPictureIV);
     contactNameTV.setText(contactName);
-    copyName.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("Contact Name", contactName);
-        clipboard.setPrimaryClip(clip);
-        Toast.makeText(getApplicationContext(), "Nama telah tersalin", Toast.LENGTH_SHORT).show();
-      }
+    dob.setText("Lahir : " + contact.dob.date);
+    gender.setText("Jenis Kelamin : " + contact.gender);
+    surel.setText("Surel : " + contact.email);
+    surel.setOnClickListener(v -> composeEmail(new String[]{contact.email}, "Halo"));
+    telpon.setText("Telpon : " + contact.phone);
+    telpon.setOnClickListener(v -> dialPhoneNumber(contact.phone));
+    seluler.setText("Seluler : " + contact.cell);
+    seluler.setOnClickListener(v -> dialPhoneNumber(contact.cell));
+    alamat.setText("Alamat : " + contact.location.street.name + " " + contact.location.street.number + ", " + contact.location.city + ", " + contact.location.state + ", " + contact.location.postcode);
+    lokasi.setText("Lokasi : " + contact.location.coordinates.latitude + ", " + contact.location.coordinates.longitude);
+    copyName.setOnClickListener(v -> {
+      ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+      ClipData clip = ClipData.newPlainText("Contact Name", contactName);
+      clipboard.setPrimaryClip(clip);
+      Toast.makeText(getApplicationContext(), "Nama telah tersalin", Toast.LENGTH_SHORT).show();
     });
   }
 
@@ -59,7 +79,7 @@ public class ContactDetailActivity extends AppCompatActivity {
       case R.id.action_share:
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, contact.name.first + " " + contact.name.last + ", " + contact.email + ", " + contact.cell);
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         startActivity(shareIntent);
@@ -73,5 +93,23 @@ public class ContactDetailActivity extends AppCompatActivity {
   public boolean onSupportNavigateUp() {
     onBackPressed();
     return true;
+  }
+
+  public void dialPhoneNumber(String phoneNumber) {
+    Intent intent = new Intent(Intent.ACTION_DIAL);
+    intent.setData(Uri.parse("tel:" + phoneNumber));
+    if (intent.resolveActivity(getPackageManager()) != null) {
+      startActivity(intent);
+    }
+  }
+
+  public void composeEmail(String[] addresses, String subject) {
+    Intent intent = new Intent(Intent.ACTION_SENDTO);
+    intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+    intent.putExtra(Intent.EXTRA_EMAIL, addresses);
+    intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+    if (intent.resolveActivity(getPackageManager()) != null) {
+      startActivity(intent);
+    }
   }
 }

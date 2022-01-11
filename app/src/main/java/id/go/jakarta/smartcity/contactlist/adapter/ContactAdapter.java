@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -41,16 +42,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     Contact model = contactArrayList.get(position);
-    holder.contactFirstNameTV.setText(model.getName().getFirst());
-    holder.contactLastNameTV.setText(model.getName().getLast());
-    Glide.with(context).load(model.getPicture().getThumbnail()).into(holder.contactIV);
+    holder.contactFirstNameTV.setText(model.name.first);
+    holder.contactLastNameTV.setText(model.name.last);
+    Glide.with(context).load(model.picture.thumbnail).into(holder.contactIV);
     holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         Intent intent = new Intent(context , ContactDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("contact_picture" , model.getPicture().getLarge());
-        bundle.putString("contact_name" , model.getName().getFirst() + " " + model.getName().getLast());
+        bundle.putString("contact" , new Gson().toJson(model));
         intent.putExtras(bundle);
         context.startActivity(intent);
       }
@@ -70,8 +70,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
       contactIV = itemView.findViewById(R.id.idIVContactImage);
-      contactFirstNameTV = itemView.findViewById(R.id.idTVContactFirstName);
-      contactLastNameTV = itemView.findViewById(R.id.idTVContactLastName);
+      contactFirstNameTV = itemView.findViewById(R.id.idTVContactDOB);
+      contactLastNameTV = itemView.findViewById(R.id.idTVContactGender);
       constraintLayout = itemView.findViewById(R.id.contactLayout);
     }
   }
