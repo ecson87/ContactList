@@ -1,0 +1,7 @@
+<resources>
+  <string name="app_name">ContactList</string>
+  <string name="large_text">
+    "Contact List"
+  </string>
+  <string name="action_settings">Settings</string>
+</resources>
