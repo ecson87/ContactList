@@ -5,7 +5,8 @@ public class Picture {
   public String medium;
   public String thumbnail;
 
-  public Picture(String thumbnail) {
+  public Picture(String large, String thumbnail) {
+    this.large = large;
     this.thumbnail = thumbnail;
   }
 

@@ -12,11 +12,16 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.ContactList">
     <activity
+      android:name=".ContactDetailActivity"
+      android:label="Rincian Kontak"
+      android:exported="false" />
+    <activity
       android:name=".MainActivity"
-      android:label="Pilih Kontak"
-      android:exported="true">
+      android:exported="true"
+      android:label="Pilih Kontak">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
+
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>

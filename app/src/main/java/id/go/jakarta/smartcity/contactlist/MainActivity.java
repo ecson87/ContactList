@@ -3,6 +3,7 @@ package id.go.jakarta.smartcity.contactlist;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.graphics.Movie;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import id.go.jakarta.smartcity.contactlist.service.APIData;
 
 public class MainActivity extends AppCompatActivity {
 
+  private SwipeRefreshLayout contactSRL;
   private RecyclerView contactRV;
   private RequestQueue requestQueue;
   private ArrayList<Contact> contactModelArrayList = new ArrayList<>();
@@ -38,11 +40,17 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    contactSRL = findViewById(R.id.idSRLContact);
     contactRV = findViewById(R.id.idRVContact);
     fetchContacts();
+    contactSRL.setOnRefreshListener(() -> {
+      contactSRL.setRefreshing(false);
+      fetchContacts();
+    });
   }
 
   private void fetchContacts() {
+    contactModelArrayList.clear();
     requestQueue = APIData.getInstance(this).getRequestQueue();
     String url = "https://randomuser.me/api?results=5&exc=login,registered,i";
     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -56,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
               JSONObject jsonObjectPicture = jsonObject.getJSONObject("picture");
               String firstName = jsonObjectName.getString("first");
               String lastName = jsonObjectName.getString("last");
+              String large = jsonObjectPicture.getString("large");
               String thumbnail = jsonObjectPicture.getString("thumbnail");
-              Contact contact = new Contact(new Name(firstName, lastName), new Picture(thumbnail));
+              Contact contact = new Contact(new Name(firstName, lastName), new Picture(large, thumbnail));
               contactModelArrayList.add(contact);
             } catch (JSONException e) {
               e.printStackTrace();
