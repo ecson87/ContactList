@@ -4,10 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/MyDatas/Document/MyWork/JSC/ContactList/app/src/main/res/layout/activity_scrolling.xml" value="0.371875" />
+        <entry key="..\:/Users/Erwin Cesar Simamora/Documents/GitHub/ContactList/app/src/main/res/layout/activity_scrolling.xml" value="0.371875" />
+        <entry key="..\:/Users/Erwin Cesar Simamora/Documents/GitHub/ContactList/app/src/main/res/layout/content_scrolling.xml" value="0.371875" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
