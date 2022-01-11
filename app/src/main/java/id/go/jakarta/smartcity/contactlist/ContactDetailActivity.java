@@ -2,13 +2,19 @@ package id.go.jakarta.smartcity.contactlist;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -21,6 +27,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+    ImageButton copyName = findViewById(R.id.contact_name_copy);
     ImageView contactPictureIV = findViewById(R.id.contact_picture);
     TextView contactNameTV = findViewById(R.id.contact_name);
     Bundle bundle = getIntent().getExtras();
@@ -28,6 +35,15 @@ public class ContactDetailActivity extends AppCompatActivity {
     String contactName = bundle.getString("contact_name");
     Glide.with(this).load(contactPicture).into(contactPictureIV);
     contactNameTV.setText(contactName);
+    copyName.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Contact Name", contactName);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(getApplicationContext(), "Nama telah tersalin", Toast.LENGTH_SHORT).show();
+      }
+    });
   }
 
   @Override

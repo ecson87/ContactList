@@ -1,34 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".ContactDetailActivity">
-
-
-<ImageView
-  android:id="@+id/contact_picture"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="250dp"
-  android:scaleType="centerCrop"
-  app:layout_constraintEnd_toEndOf="parent"
-  app:layout_constraintHorizontal_bias="0.5"
-  app:layout_constraintStart_toStartOf="parent"
-  app:layout_constraintTop_toTopOf="parent" />
+  android:layout_height="match_parent"
+  tools:context=".ContactDetailActivity">
 
 
-  <TextView
-    android:id="@+id/contact_name"
-    android:layout_width="350dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="24dp"
-    android:text="movie"
-    android:textColor="@color/black"
-    android:textSize="20sp"
-    android:textStyle="bold"
+  <ImageView
+    android:id="@+id/contact_picture"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:scaleType="centerCrop"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <LinearLayout
+    android:id="@+id/linearLayout"
+    android:layout_width="0dp"
+    android:layout_height="479dp"
+    android:layout_marginStart="1dp"
+    android:layout_marginTop="1dp"
+    android:layout_marginEnd="1dp"
+    android:orientation="vertical"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/contact_picture" />
+    app:layout_constraintTop_toBottomOf="@+id/contact_picture">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="horizontal">
+
+      <TextView
+        android:id="@+id/contact_name"
+        android:layout_width="350dp"
+        android:layout_height="48dp"
+        android:text="contact"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@+id/contact_picture" />
+
+      <ImageButton
+        android:id="@+id/contact_name_copy"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        app:srcCompat="?attr/actionModeCopyDrawable" />
+    </LinearLayout>
+
+  </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
