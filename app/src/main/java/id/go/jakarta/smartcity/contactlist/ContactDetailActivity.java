@@ -58,6 +58,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     seluler.setOnClickListener(v -> dialPhoneNumber(contact.cell));
     alamat.setText("Alamat : " + contact.location.street.name + " " + contact.location.street.number + ", " + contact.location.city + ", " + contact.location.state + ", " + contact.location.postcode);
     lokasi.setText("Lokasi : " + contact.location.coordinates.latitude + ", " + contact.location.coordinates.longitude);
+    lokasi.setOnClickListener(v -> showMap(Uri.parse("geo:0,0?q=" + contact.location.coordinates.latitude + "," + contact.location.coordinates.longitude + "(Treasure)")));
     copyName.setOnClickListener(v -> {
       ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
       ClipData clip = ClipData.newPlainText("Contact Name", contactName);
@@ -108,6 +109,14 @@ public class ContactDetailActivity extends AppCompatActivity {
     intent.setData(Uri.parse("mailto:")); // only email apps should handle this
     intent.putExtra(Intent.EXTRA_EMAIL, addresses);
     intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+    if (intent.resolveActivity(getPackageManager()) != null) {
+      startActivity(intent);
+    }
+  }
+
+  public void showMap(Uri geoLocation) {
+    Intent intent = new Intent(Intent.ACTION_VIEW);
+    intent.setData(geoLocation);
     if (intent.resolveActivity(getPackageManager()) != null) {
       startActivity(intent);
     }

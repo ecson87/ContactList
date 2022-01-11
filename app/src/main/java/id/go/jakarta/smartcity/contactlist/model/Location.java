@@ -12,7 +12,7 @@ public class Location {
   @SerializedName("country")
   public String country;
   @SerializedName("postcode")
-  public int postcode;
+  public String postcode;
   @SerializedName("coordinates")
   public Coordinates coordinates;
   @SerializedName("timezone")
