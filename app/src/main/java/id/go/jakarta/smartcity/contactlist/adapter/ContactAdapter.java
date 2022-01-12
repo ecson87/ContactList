@@ -42,18 +42,16 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     Contact model = contactArrayList.get(position);
-    holder.contactFirstNameTV.setText(model.name.first);
-    holder.contactLastNameTV.setText(model.name.last);
+    holder.contactNameTV.setText(model.getLongName());
+    holder.contactEmailTV.setText(model.email);
+    holder.contactAddressTV.setText(model.getAddress());
     Glide.with(context).load(model.picture.thumbnail).into(holder.contactIV);
-    holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent intent = new Intent(context , ContactDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("contact" , new Gson().toJson(model));
-        intent.putExtras(bundle);
-        context.startActivity(intent);
-      }
+    holder.constraintLayout.setOnClickListener(v -> {
+      Intent intent = new Intent(context , ContactDetailActivity.class);
+      Bundle bundle = new Bundle();
+      bundle.putString("contact" , new Gson().toJson(model));
+      intent.putExtras(bundle);
+      context.startActivity(intent);
     });
   }
 
@@ -64,14 +62,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
   public class ViewHolder extends RecyclerView.ViewHolder {
     private ImageView contactIV;
-    private TextView contactFirstNameTV, contactLastNameTV;
+    private TextView contactNameTV, contactEmailTV, contactAddressTV;
     private ConstraintLayout constraintLayout;
 
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
       contactIV = itemView.findViewById(R.id.idIVContactImage);
-      contactFirstNameTV = itemView.findViewById(R.id.idTVContactDOB);
-      contactLastNameTV = itemView.findViewById(R.id.idTVContactGender);
+      contactNameTV = itemView.findViewById(R.id.idTVContactName);
+      contactEmailTV = itemView.findViewById(R.id.idTVContactEmail);
+      contactAddressTV = itemView.findViewById(R.id.idTVContactAddress);
       constraintLayout = itemView.findViewById(R.id.contactLayout);
     }
   }

@@ -1,7 +1,5 @@
 package id.go.jakarta.smartcity.contactlist;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -11,11 +9,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -30,6 +29,8 @@ public class ContactDetailActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_contact_detail);
+    String jsonContact = getIntent().getExtras().getString("contact");
+    contact = new Gson().fromJson(jsonContact, Contact.class);
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -38,33 +39,25 @@ public class ContactDetailActivity extends AppCompatActivity {
     TextView contactNameTV = findViewById(R.id.contact_name);
     TextView dob = findViewById(R.id.idTVContactDOB);
     TextView gender = findViewById(R.id.idTVContactGender);
-    TextView surel = findViewById(R.id.idTVContactSurel);
-    TextView telpon = findViewById(R.id.idTVContactTelpon);
-    TextView seluler = findViewById(R.id.idTVContactSeluler);
-    TextView alamat = findViewById(R.id.idTVContactAlamat);
-    TextView lokasi = findViewById(R.id.idTVContactLokasi);
-    String jsonContact = getIntent().getExtras().getString("contact");
-    contact = new Gson().fromJson(jsonContact, Contact.class);
-    String contactName = contact.name.first + " " + contact.name.last;
+    TextView email = findViewById(R.id.idTVContactSurel);
+    TextView phone = findViewById(R.id.idTVContactTelpon);
+    TextView mobile = findViewById(R.id.idTVContactSeluler);
+    TextView address = findViewById(R.id.idTVContactAlamat);
+    TextView location = findViewById(R.id.idTVContactLokasi);
     Glide.with(this).load(contact.picture.large).into(contactPictureIV);
-    contactNameTV.setText(contactName);
-    dob.setText("Lahir : " + contact.dob.date);
-    gender.setText("Jenis Kelamin : " + contact.gender);
-    surel.setText("Surel : " + contact.email);
-    surel.setOnClickListener(v -> composeEmail(new String[]{contact.email}, "Halo"));
-    telpon.setText("Telpon : " + contact.phone);
-    telpon.setOnClickListener(v -> dialPhoneNumber(contact.phone));
-    seluler.setText("Seluler : " + contact.cell);
-    seluler.setOnClickListener(v -> dialPhoneNumber(contact.cell));
-    alamat.setText("Alamat : " + contact.location.street.name + " " + contact.location.street.number + ", " + contact.location.city + ", " + contact.location.state + ", " + contact.location.postcode);
-    lokasi.setText("Lokasi : " + contact.location.coordinates.latitude + ", " + contact.location.coordinates.longitude);
-    lokasi.setOnClickListener(v -> showMap(Uri.parse("geo:0,0?q=" + contact.location.coordinates.latitude + "," + contact.location.coordinates.longitude + "(Treasure)")));
-    copyName.setOnClickListener(v -> {
-      ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
-      ClipData clip = ClipData.newPlainText("Contact Name", contactName);
-      clipboard.setPrimaryClip(clip);
-      Toast.makeText(getApplicationContext(), "Nama telah tersalin", Toast.LENGTH_SHORT).show();
-    });
+    contactNameTV.setText(contact.getLongName());
+    copyName.setOnClickListener(v -> copyContactName(contact.getLongName()));
+    dob.setText(contact.dob.date);
+    gender.setText(contact.gender);
+    email.setText(contact.email);
+    email.setOnClickListener(v -> composeEmail(new String[]{contact.email}, "Halo"));
+    phone.setText(contact.phone);
+    phone.setOnClickListener(v -> dialPhoneNumber(contact.phone));
+    mobile.setText(contact.cell);
+    mobile.setOnClickListener(v -> dialPhoneNumber(contact.cell));
+    address.setText(contact.getAddress());
+    location.setText(contact.getPosition());
+    location.setOnClickListener(v -> showMap(Uri.parse(contact.getMapLocationURI())));
   }
 
   @Override
@@ -80,7 +73,7 @@ public class ContactDetailActivity extends AppCompatActivity {
       case R.id.action_share:
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, contact.name.first + " " + contact.name.last + ", " + contact.email + ", " + contact.cell);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, contact.getShareContent());
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         startActivity(shareIntent);
@@ -94,6 +87,13 @@ public class ContactDetailActivity extends AppCompatActivity {
   public boolean onSupportNavigateUp() {
     onBackPressed();
     return true;
+  }
+
+  public void copyContactName(String contactName) {
+    ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+    ClipData clip = ClipData.newPlainText("Contact Name", contactName);
+    clipboard.setPrimaryClip(clip);
+    Toast.makeText(getApplicationContext(), "Nama telah tersalin", Toast.LENGTH_SHORT).show();
   }
 
   public void dialPhoneNumber(String phoneNumber) {

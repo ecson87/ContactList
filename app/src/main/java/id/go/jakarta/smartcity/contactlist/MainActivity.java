@@ -1,29 +1,23 @@
 package id.go.jakarta.smartcity.contactlist;
 
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.os.Bundle;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 import id.go.jakarta.smartcity.contactlist.adapter.ContactAdapter;
 import id.go.jakarta.smartcity.contactlist.model.Contact;
 import id.go.jakarta.smartcity.contactlist.model.DataResult;
-import id.go.jakarta.smartcity.contactlist.model.Name;
-import id.go.jakarta.smartcity.contactlist.model.Picture;
 import id.go.jakarta.smartcity.contactlist.service.APIHelper;
 
 public class MainActivity extends AppCompatActivity {

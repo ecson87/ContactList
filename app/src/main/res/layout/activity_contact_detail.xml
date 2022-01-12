@@ -26,25 +26,26 @@
       android:id="@+id/contact_name"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginStart="16dp"
-      android:layout_marginEnd="16dp"
+      android:layout_marginStart="12dp"
       android:text="Nama Kontak"
+      android:textStyle="bold"
       app:layout_constraintBottom_toBottomOf="@+id/contact_name_copy"
-      app:layout_constraintEnd_toStartOf="@+id/contact_name_copy"
-      app:layout_constraintStart_toStartOf="@+id/contact_picture"
-      app:layout_constraintTop_toBottomOf="@+id/contact_picture" />
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/contact_name_copy" />
 
     <ImageButton
       android:id="@+id/contact_name_copy"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="16dp"
-      app:layout_constraintEnd_toEndOf="@+id/contact_picture"
+      android:layout_marginStart="8dp"
+      android:minHeight="48dp"
+      app:layout_constraintStart_toEndOf="@+id/contact_name"
       app:layout_constraintTop_toBottomOf="@+id/contact_picture"
-      app:srcCompat="?attr/actionModeCopyDrawable" />
+      app:srcCompat="?attr/actionModeCopyDrawable"
+      tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.cardview.widget.CardView
-      android:id="@+id/contactCV"
+      android:id="@+id/contactCV1"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       app:cardBackgroundColor="@color/gray"
@@ -59,21 +60,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp">
-
-        <TextView
-          android:id="@+id/idTVContactDOB"
+        <LinearLayout
+          android:id="@+id/idLLContactName"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="Lahir"
-          android:textColor="@color/black" />
-
-        <TextView
-          android:id="@+id/idTVContactGender"
+          android:orientation="horizontal">
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textStyle="bold"
+            android:text="Lahir"/>
+          <TextView
+            android:id="@+id/idTVContactDOB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text=""/>
+        </LinearLayout>
+        <LinearLayout
+          android:id="@+id/idLLContactGender"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_below="@id/idTVContactDOB"
-          android:text="Jenis Kelamin"
-          android:textColor="@color/black" />
+          android:layout_below="@id/idLLContactName"
+          android:orientation="horizontal">
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textStyle="bold"
+            android:text="Jenis Kelamin"/>
+          <TextView
+            android:id="@+id/idTVContactGender"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text=""/>
+        </LinearLayout>
       </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -88,35 +111,70 @@
       app:cardUseCompatPadding="true"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/contactCV">
-
+      app:layout_constraintTop_toBottomOf="@+id/contactCV1">
       <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp">
-
-        <TextView
-          android:id="@+id/idTVContactSurel"
+        <LinearLayout
+          android:id="@+id/idLLContactSurel"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="Surel"
-          android:textColor="@color/black" />
-
-        <TextView
-          android:id="@+id/idTVContactTelpon"
+          android:orientation="horizontal">
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textStyle="bold"
+            android:text="Surel"/>
+          <TextView
+            android:id="@+id/idTVContactSurel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#6495ED"
+            android:text=""/>
+        </LinearLayout>
+        <LinearLayout
+          android:id="@+id/idLLContactTelpon"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_below="@id/idTVContactSurel"
-          android:text="Telpon"
-          android:textColor="@color/black" />
-
-        <TextView
-          android:id="@+id/idTVContactSeluler"
+          android:layout_below="@id/idLLContactSurel"
+          android:orientation="horizontal">
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textStyle="bold"
+            android:text="Telpon"/>
+          <TextView
+            android:id="@+id/idTVContactTelpon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#6495ED"
+            android:text=""/>
+        </LinearLayout>
+        <LinearLayout
+          android:id="@+id/idLLContactSeluler"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_below="@id/idTVContactTelpon"
-          android:text="Seluler"
-          android:textColor="@color/black" />
+          android:layout_below="@id/idLLContactTelpon"
+          android:orientation="horizontal">
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textStyle="bold"
+            android:text="Seluler"/>
+          <TextView
+            android:id="@+id/idTVContactSeluler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#6495ED"
+            android:text=""/>
+        </LinearLayout>
       </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -132,26 +190,48 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/contactCV2">
-
       <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp">
-
-        <TextView
-          android:id="@+id/idTVContactAlamat"
+        <LinearLayout
+          android:id="@+id/idLLContactAddress"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="Alamat"
-          android:textColor="@color/black" />
-
-        <TextView
-          android:id="@+id/idTVContactLokasi"
+          android:orientation="horizontal">
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textStyle="bold"
+            android:text="Alamat"/>
+          <TextView
+            android:id="@+id/idTVContactAlamat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text=""/>
+        </LinearLayout>
+        <LinearLayout
+          android:id="@+id/idLLContactLocation"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_below="@id/idTVContactAlamat"
-          android:text="Lokasi"
-          android:textColor="@color/black" />
+          android:layout_below="@id/idLLContactAddress"
+          android:orientation="horizontal">
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textStyle="bold"
+            android:text="Lokasi"/>
+          <TextView
+            android:id="@+id/idTVContactLokasi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#6495ED"
+            android:text=""/>
+        </LinearLayout>
       </RelativeLayout>
     </androidx.cardview.widget.CardView>
   </androidx.constraintlayout.widget.ConstraintLayout>

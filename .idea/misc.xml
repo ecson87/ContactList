@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/MyProjects/android/ContactList/app/src/main/res/drawable/ic_profile.xml" value="0.3880208333333333" />
+        <entry key="..\:/MyProjects/android/ContactList/app/src/main/res/layout/activity_contact_detail.xml" value="0.371875" />
         <entry key="..\:/MyProjects/android/ContactList/app/src/main/res/layout/activity_main.xml" value="0.371875" />
         <entry key="..\:/MyProjects/android/ContactList/app/src/main/res/layout/card_layout.xml" value="0.33" />
+        <entry key="..\:/MyProjects/android/ContactList/app/src/main/res/layout/contact_item.xml" value="0.371875" />
         <entry key="..\:/MyProjects/android/ContactList/app/src/main/res/layout/contact_layout.xml" value="0.20885416666666667" />
         <entry key="..\:/Users/Erwin Cesar Simamora/Documents/GitHub/ContactList/app/src/main/res/layout/activity_contact_detail.xml" value="0.33" />
         <entry key="..\:/Users/Erwin Cesar Simamora/Documents/GitHub/ContactList/app/src/main/res/layout/activity_main.xml" value="0.371875" />
