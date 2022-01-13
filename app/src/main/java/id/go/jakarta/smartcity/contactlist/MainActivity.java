@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void fetchContacts() {
-    contactModelArrayList.clear();
     String url = "https://randomuser.me/api?results=5&exc=login,registered,id,nat&nat=us&noinfo";
     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
     response -> {
       DataResult dataResult = new Gson().fromJson(response.toString(), DataResult.class);
+      contactModelArrayList.clear();
       contactModelArrayList.addAll(dataResult.results);
       ContactAdapter contactAdapter = new ContactAdapter(this, contactModelArrayList);
       LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
