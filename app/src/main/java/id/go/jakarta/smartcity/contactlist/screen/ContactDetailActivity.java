@@ -1,4 +1,4 @@
-package id.go.jakarta.smartcity.contactlist;
+package id.go.jakarta.smartcity.contactlist.screen;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
+import id.go.jakarta.smartcity.contactlist.R;
 import id.go.jakarta.smartcity.contactlist.model.Contact;
 
 public class ContactDetailActivity extends AppCompatActivity {

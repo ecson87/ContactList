@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-import id.go.jakarta.smartcity.contactlist.ContactDetailActivity;
+import id.go.jakarta.smartcity.contactlist.screen.ContactDetailActivity;
 import id.go.jakarta.smartcity.contactlist.R;
 import id.go.jakarta.smartcity.contactlist.model.Contact;
 

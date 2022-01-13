@@ -13,7 +13,7 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.ContactList">
     <activity
-      android:name=".ContactDetailActivity"
+      android:name=".screen.ContactDetailActivity"
       android:label="Rincian Kontak"
       android:exported="false" />
     <activity
