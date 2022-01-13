@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    contactSRL = findViewById(R.id.idSRLContact);
     contactRV = findViewById(R.id.idRVContact);
+    contactSRL = findViewById(R.id.idSRLContact);
     contactSRL.setOnRefreshListener(() -> {
       contactSRL.setRefreshing(false);
       fetchContacts();
